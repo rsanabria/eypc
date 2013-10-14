@@ -9,6 +9,7 @@ mne_rel = []
 reservadas = ["EQU", "ORG", "FCB", "END"]
 dvariables = {}
 valor_v = []
+lista = []
 def mn():
 	global mne
 	f = open("mnemonicos.txt",'r')
@@ -38,20 +39,39 @@ def mne_REL():
 			mne_rel.append(i[0])
 			
 def leerarchivo():
+	global lista, lista_lineas,f
 	archivo_l = []
+	a =[]
+	b = []
+	lista_lineas = []
 	f = open("EJEMPLO.ASC", "r")
 	for i in f.readlines():
-		a = i.split(" ")
-		for j in a:
-			#print j
-			if len(j) < 3:
-				pass
-			else:
-				archivo_l.append(j)
-				if "\n" in j:
-					archivo_lineas.append(archivo_l)
-					archivo_l = []
+		lista_lineas.append(i.split(" "))
 		archivo.append(i)
+	for j in lista_lineas:
+			b.append(a)
+			a = []
+			for k in j:
+				if len(k)== 0:
+					pass
+				elif "*" in k and j[0] != "*":
+					break
+				else:
+					if "\r\n" in k:
+						k = k.split("\r\n")[0]
+						a.append(k)
+					elif "\r" in k:
+						print k
+						if len(k)== 1:
+							k = ""
+							a.append(k)
+						else:
+							k = k.split("\r")[0]
+							a.append(k)
+					else:
+						a.append(k)
+	lista_lineas = b
+		
 				
 			
 		
@@ -127,8 +147,8 @@ def principal():
 			f.write(str(count)+"A "+ str(i))
 			
 		count +=1
+	f.close()
 	
 #print archivo_lineas[4]
 principal()
-
-		
+print len(archivo),len(lista_lineas)
