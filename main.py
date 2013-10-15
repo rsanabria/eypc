@@ -166,22 +166,6 @@ def principal():
                                 else:
                                         f.write(str(i)+"A "+a+ archivo[i])
                 
-
-##                if count-1 == 60:
-##                        print lista_lineas[count-1]
-##                if "*" in i:
-##                        f.write(str(count)+"A "+inst+"   "+str(i))
-##                else:
-##                        if lista_lineas[count-1][0] == reservadas[1]:
-##                                print "entra en linea", count
-##                                contador_memoria = int((lista_lineas[count-1][len(lista_lineas[count-1])-1].strip("$")[0]).encode('hex'),16)
-##                        else:
-##                                contador_memoria = str("")
-##                f.write(str(count)+"A "+str(contador_memoria)+ str(i))
-##                if type(contador_memoria) == int:
-##                        contador_memoria += 1
-##                count +=1
-                #count += 1
         f.close()
 	
 principal()
