@@ -44,16 +44,21 @@ def leerarchivo():
         a =[]
         b = []
         lista_lineas = []
+        c = 0
         f = open("EJEMPLO.ASC", "r")
         for i in f.readlines():
                 lista_lineas.append(i.split(" "))
                 archivo.append(i)
+                if c ==3:
+                        print lista_lineas
+                c += 1
         for j in lista_lineas:
                         b.append(a)
                         a = []
                         for k in j:
                                 if len(k)== 0:
-                                        pass
+                                        #a.append(k)
+                                       pass
                                 elif "*" in k and j[0] != "*":
                                         break
                                 else:
@@ -149,24 +154,44 @@ def principal():
         contador_memoria = 0
         a = ""
         for i in range(0,len(archivo)):
-                if lista_lineas[i][0] == reservadas[1] and count == 0:
+                n = ""
+                n_o = ""
+                o = ""
+                if lista_lineas[i][0] == reservadas[1] :#nd count == 0:
                        a = (int((lista_lineas[i][len(lista_lineas[i])-1].split("$")[1]),16))#+ 0x8000
                        count = 1
                 else:
-                        if archivo[i][0] == "*":
-                                f.write(str(i)+"A "+inst+"   "+archivo[i])
+                        if archivo[i][0] == "*" or len(archivo[i].strip(" "))<2 :
+                                f.write(str(i+1)+"A "+inst+"   "+archivo[i])
                                 if a != "":
                                         a = a+8
                                 
                         else:
+                                if lista_lineas[i][0] in mnemonicos:
+                                        n = lista_lineas[i][0]
+                                        o = lista_lineas[i][-1]
+                                        if "#" in lista_lineas[i][-1]:
+                                                o = o.split("#")[1]
+                                                if "$" in o:
+                                                        o = o.split("$")[1]
+                                                if o in dvariables.keys():
+                                                        o = dvariables[o]
+                                                for t in mne:
+                                                        if t[0] == n:
+                                                                n_o = t[1]
+                                                                
+                                                                
                                 if a != "":
-                                        print a
                                         a = a+8
-                                        f.write(str(i)+"A "+hex(a).split("x")[1].upper()+" "+ archivo[i])
+                                        if n_o != "":
+                                                f.write(str(i+1)+"A "+hex(a).split("x")[1].upper()+" "+n_o+o + archivo[i-1])
+                                        else:
+                                                f.write(str(i+1)+"A "+hex(a).split("x")[1].upper()+" " + archivo[i-1])
                                 else:
-                                        f.write(str(i)+"A "+a+ archivo[i])
+                                        f.write(str(i+1)+"A "+a+ archivo[i])
+                
                 
         f.close()
-	
+
 principal()
 
